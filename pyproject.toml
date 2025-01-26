@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cse3000-deltamc"
+version = "0.1.0"
+description = "CSE3000 Research Project, DeltaMC"
+authors = [
+    { name = "David Coroian"}
+]
+readme = "README.md"
+license = { text = "MIT" }
+
+dependencies = [
+    "gmpy2",
+    "pandas==2.2.2",
+    "ipykernel",
+    "matplotlib",
+    "seaborn",
+    "cython"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "delta-debugger",
+]
