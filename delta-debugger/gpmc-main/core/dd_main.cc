@@ -251,20 +251,6 @@ template <class T_data> void main_mc(Counter<T_data> &S, string filename) {
   S.setExtraVarScore();
   printf("c o Elapsed time %.2lf s\nc o\n", cpuTime());
 
-  // Counting
-  // counter = (Solver *)&S;
-  // printf("c o Counting starts ...\n");
-  // fflush(stdout);
-  // bool suc = S.countModels();
-  // S.printStats();
-  // printf("c o [Result]\n");
-  // if (suc) {
-  //   printResult(S.sat, S.config.mode, S.getMC());
-  //   counter = NULL;
-  //   if (S.config.ddnnf)
-  //     doDNNF(S);
-  // } else
-  //   printf("s UNKNOWN\n");
   fflush(stdout);
 }
 
@@ -274,15 +260,13 @@ namespace gpmc_wrapper {
 
 void GPMCWrapper::PrintDeltaCNF(std::string out_file_path) {
   std::cout << "c o [DeltaD] - Printing current CNF file to " << out_file_path
-            << endl; // [DD] TODO FIX ORDER BUFFER
+            << endl;
   S_.get()->PrintCurrentCNF(out_file_path);
 }
 
 void GPMCWrapper::InitProbDD(int heuristic, std::string log_file_path,
                              std::string counter_name) {
   std::cout << "c o [DeltaD] - Initializing probabilities" << endl;
-
-  std::cout << "Init prob dd TESTING" << endl;
 
   auto counter = S_.get();
   counter->InitBuggyInstance();
@@ -304,7 +288,7 @@ void GPMCWrapper::InitProbDD(int heuristic, std::string log_file_path,
     }
 
     std::cout
-        << "c o [DeltaD] - Heuristic 1: Equal initial probabilities of 1/n "
+        << "c o [DeltaD] - Heuristic 1: Equal initial probabilities of "
         << sigma << endl;
 
     // ----
@@ -358,12 +342,6 @@ void GPMCWrapper::InitProbDD(int heuristic, std::string log_file_path,
       }
     }
 
-    // Total sum of frequency scores. Each literal contributes to the total sum
-    // with the square of it's frequency.
-    // for (auto literal_freq : frequency_map) {
-    //   sum_frequencies_scores += literal_freq.second * literal_freq.second;
-    // }
-
     int sum_clauses_scores = 0;
     vector<int> clause_scores;
     clause_scores.resize(n_clauses);
@@ -413,9 +391,6 @@ void GPMCWrapper::InitProbDD(int heuristic, std::string log_file_path,
 void GPMCWrapper::SelectProbDDTest(std::string tested_cnf_output_path) {
   std::cout << "c o [DeltaD] - Selecting clauses for test..." << endl;
 
-  // TODO
-  std::cout << "TEST selection Is working? " << endl;
-
   auto counter = S_.get();
   counter->PrepareProbDDTest(tested_cnf_output_path);
 
@@ -427,18 +402,12 @@ void GPMCWrapper::UpdateProbDD(bool test_result) {
   std::cout << "c o [DeltaD] - Processing test result of " << test_result
             << endl;
 
-  // TODO
-  std::cout << "test_result processing is TESTING??" << endl;
-
   S_.get()->UpdateProbDD(test_result);
 
   std::cout << "c o [DeltaD] - Done Processing test result" << endl;
 }
 
 void GPMCWrapper::PrintReducedCNF(std::string reduced_cnf_output_path) {
-  // TODO
-  std::cout << "Printing final cnf TESTING?? " << endl;
-
   S_.get()->PrintReducedCNF(reduced_cnf_output_path);
 
   std::cout << "c o [DeltaD] - Printed final reduced CNF at "
@@ -449,8 +418,6 @@ int ok = 0;
 
 bool GPMCWrapper::IsProbDDFinished() {
   std::cout << "c o [DeltaD] - Queried ProbDD status" << endl;
-
-  std::cout << " is prob-dd finished in TESTING" << endl;
 
   return S_.get()->IsProbDDFinished();
 }
